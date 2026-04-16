@@ -51,6 +51,7 @@ export type {
   RegimeEspecialBuscarParams,
   RegimeEspecialBuscarResponse,
   // Conta
+  ContaUsoParams,
   ContaUsoResponse,
   // IBPT
   IbptResponse,

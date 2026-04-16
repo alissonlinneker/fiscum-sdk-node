@@ -92,8 +92,8 @@ export class HttpClient {
 
         const error = new FiscumError(
           response.status,
-          errorBody?.code ?? `HTTP_${response.status}`,
-          errorBody?.message ?? response.statusText,
+          errorBody?.codigo ?? errorBody?.code ?? `HTTP_${response.status}`,
+          errorBody?.erro ?? errorBody?.message ?? response.statusText,
         );
 
         // Only retry on retryable status codes

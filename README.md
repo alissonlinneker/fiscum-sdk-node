@@ -40,7 +40,7 @@ const difal = await fiscum.calculos.difal({
   uf_destino: 'MG',
   valor: 100,
   crt: 3,
-  contribuinte: true,
+  contribuinte: 1,
 });
 ```
 
@@ -84,23 +84,23 @@ await fiscum.gtin.bulk(['7891000315507', '7891000100103']);
 ### Cálculos
 
 ```ts
-await fiscum.calculos.difal({ ncm, uf_origem, uf_destino, valor, crt, contribuinte });
+await fiscum.calculos.difal({ ncm, uf_origem, uf_destino, valor, crt, contribuinte }); // contribuinte: 0 | 1
 await fiscum.calculos.icmsSt({ ncm, uf, valor, iva });
 await fiscum.calculos.transparenciaFiscal({ ncm, uf, valor });
-await fiscum.calculos.municipio({ ncm, uf, municipio_ibge, valor });
+await fiscum.calculos.municipio({ ncm, uf, municipio_ibge, valor, tipo_servico: 'consultoria' });
 ```
 
 ### Changelog
 
 ```ts
 await fiscum.changelog.listar({ page: 1, limit: 20, uf: 'SP' });
-await fiscum.changelog.alterados({ /* filtros */ });
+await fiscum.changelog.alterados('00000000000100', 'SP', 50);
 ```
 
 ### Webhooks
 
 ```ts
-await fiscum.webhooks.subscribe({ url: 'https://...', eventos: ['regra.atualizada'], ufs: ['SP'] });
+await fiscum.webhooks.subscribe({ url: 'https://...', eventos: ['regra_atualizada'], ufs: ['SP'] });
 await fiscum.webhooks.listar();
 await fiscum.webhooks.deletar('webhook-id');
 ```
@@ -133,6 +133,7 @@ await fiscum.ibpt.consultar('21011110', 'SP');
 
 ```ts
 await fiscum.conta.uso();
+await fiscum.conta.uso({ periodo: '2026-04' });
 ```
 
 ### Auth

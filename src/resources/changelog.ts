@@ -17,8 +17,18 @@ export class ChangelogResource {
     );
   }
 
-  /** Get changed products. */
-  alterados(params?: AlteradosParams): Promise<AlteradosResponse> {
-    return this.client.post<AlteradosResponse>('/v1/alterados', params);
+  /**
+   * Get changed products since the last query.
+   * @param cnpj - CNPJ (14 digits)
+   * @param uf - UF code (2 letters)
+   * @param limite - Optional max results
+   */
+  alterados(cnpj: string, uf: string, limite?: number): Promise<AlteradosResponse> {
+    let dados = `${cnpj}|${uf}`;
+    if (limite !== undefined) {
+      dados = `${dados}|${limite}`;
+    }
+    const body: AlteradosParams = { nomeServico: 'ALTERADOS', dados };
+    return this.client.post<AlteradosResponse>('/v1/alterados', body);
   }
 }

@@ -10,21 +10,26 @@ export interface FiscumOptions {
 // ── Error ──────────────────────────────────────────────────────────────────
 
 export interface FiscumErrorBody {
-  status: number;
-  code: string;
-  message: string;
+  /** API error message (mapped from `erro` field in the response) */
+  erro?: string;
+  /** Machine-readable error code (mapped from `codigo` field in the response) */
+  codigo?: string;
+  /** Fallback fields for non-standard responses */
+  message?: string;
+  code?: string;
+  status?: number;
 }
 
 // ── Auth ───────────────────────────────────────────────────────────────────
 
 export interface GerarApiKeyResponse {
-  apiKey: string;
-  id: string;
-  criadaEm: string;
+  api_key: string;
+  prefix: string;
+  aviso: string;
 }
 
 export interface RevogarApiKeyResponse {
-  message: string;
+  mensagem: string;
 }
 
 // ── Regras Fiscais ─────────────────────────────────────────────────────────
@@ -77,10 +82,12 @@ export interface NcmSugerirParams {
 }
 
 export interface NcmSugerirResponse {
+  descricao_pesquisada: string;
+  total: number;
   sugestoes: Array<{
     ncm: string;
     descricao: string;
-    score: number;
+    relevancia: number;
     [key: string]: unknown;
   }>;
   [key: string]: unknown;
@@ -120,10 +127,19 @@ export interface GtinBulkParams {
 }
 
 export interface GtinBulkResponse {
-  resultados: Array<{
+  total_enviados: number;
+  total_encontrados: number;
+  total_nao_encontrados: number;
+  encontrados: Array<{
     gtin: string;
+    ncm: string;
+    descricao: string | null;
+    marca: string | null;
+    ncm_descricao: string | null;
+    fonte: string;
     [key: string]: unknown;
   }>;
+  nao_encontrados: string[];
   [key: string]: unknown;
 }
 
@@ -135,7 +151,8 @@ export interface CalcularDifalParams {
   uf_destino: string;
   valor: number;
   crt: number;
-  contribuinte: boolean;
+  contribuinte: 0 | 1;
+  importado?: boolean;
   [key: string]: unknown;
 }
 
@@ -171,6 +188,7 @@ export interface CalcularMunicipioParams {
   uf: string;
   municipio_ibge: string;
   valor: number;
+  tipo_servico?: string;
   [key: string]: unknown;
 }
 
@@ -194,6 +212,8 @@ export interface ChangelogListarResponse {
 }
 
 export interface AlteradosParams {
+  nomeServico: string;
+  dados: string;
   [key: string]: unknown;
 }
 
@@ -226,7 +246,7 @@ export interface WebhookListarResponse {
 }
 
 export interface WebhookDeletarResponse {
-  message: string;
+  mensagem: string;
 }
 
 // ── Produto ────────────────────────────────────────────────────────────────
@@ -248,7 +268,8 @@ export interface ClassificarProdutoResponse {
 
 export interface RegimeEspecialBuscarParams {
   uf: string;
-  cnae: string;
+  cnae?: string;
+  tipo?: string;
   [key: string]: unknown;
 }
 
@@ -257,6 +278,10 @@ export interface RegimeEspecialBuscarResponse {
 }
 
 // ── Conta ──────────────────────────────────────────────────────────────────
+
+export interface ContaUsoParams {
+  periodo?: string;
+}
 
 export interface ContaUsoResponse {
   [key: string]: unknown;
