@@ -1,0 +1,47 @@
+{
+  "name": "@fiscum/sdk",
+  "version": "1.0.0",
+  "description": "SDK oficial para a API Fiscum Classifica — regras fiscais, NCM, GTIN, cálculos tributários e mais.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "clean": "rm -rf dist"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "fiscum",
+    "fiscal",
+    "ncm",
+    "gtin",
+    "icms",
+    "tax",
+    "brazil",
+    "tributario",
+    "nfe",
+    "regras-fiscais"
+  ],
+  "author": "Fiscum <contato@fiscum.com.br>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fiscum/fiscum-sdk-node.git"
+  },
+  "homepage": "https://fiscum.com.br",
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}
