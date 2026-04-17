@@ -11,6 +11,7 @@ import { ProdutoResource } from './resources/produto.js';
 import { RegimeEspecialResource } from './resources/regime-especial.js';
 import { IbptResource } from './resources/ibpt.js';
 import { ContaResource } from './resources/conta.js';
+import { PortariasResource } from './resources/portarias.js';
 
 export class Fiscum {
   private readonly client: HttpClient;
@@ -37,6 +38,8 @@ export class Fiscum {
   public readonly ibpt: IbptResource;
   /** Account — usage metrics */
   public readonly conta: ContaResource;
+  /** Portarias — state fiscal ordinances (list and detail) */
+  public readonly portarias: PortariasResource;
 
   constructor(options: FiscumOptions) {
     this.client = new HttpClient(options);
@@ -52,6 +55,7 @@ export class Fiscum {
     this.regimeEspecial = new RegimeEspecialResource(this.client);
     this.ibpt = new IbptResource(this.client);
     this.conta = new ContaResource(this.client);
+    this.portarias = new PortariasResource(this.client);
   }
 
   /** Health check (no auth required). */

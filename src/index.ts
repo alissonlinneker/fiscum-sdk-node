@@ -55,6 +55,13 @@ export type {
   ContaUsoResponse,
   // IBPT
   IbptResponse,
+  // Portarias
+  PortariaTipo,
+  Portaria,
+  PortariaNcmAfetado,
+  PortariaDetalhe,
+  ListPortariasParams,
+  ListPortariasResponse,
   // Status
   HealthResponse,
   MetricsResponse,

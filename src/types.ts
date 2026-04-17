@@ -426,6 +426,61 @@ export interface IbptResponse {
   [key: string]: unknown;
 }
 
+// ── Portarias ──────────────────────────────────────────────────────────────
+
+export type PortariaTipo =
+  | 'portaria'
+  | 'resolucao'
+  | 'decreto'
+  | 'instrucao_normativa'
+  | 'ato_declaratorio'
+  | 'comunicado';
+
+export interface Portaria {
+  numero: string;
+  tipo: PortariaTipo;
+  uf: string;
+  orgao_emissor: string;
+  data_publicacao: string;
+  dtvig_ini?: string | null;
+  dtvig_fin?: string | null;
+  assunto?: string;
+  resumo?: string;
+  url?: string;
+  [key: string]: unknown;
+}
+
+export interface PortariaNcmAfetado {
+  ncm: string;
+  cest?: string | null;
+  mva?: number | null;
+  aliq?: number | null;
+  observacao?: string;
+  [key: string]: unknown;
+}
+
+export interface PortariaDetalhe extends Portaria {
+  texto_integral: string;
+  ncms: PortariaNcmAfetado[];
+}
+
+export interface ListPortariasParams {
+  uf?: string;
+  ncm?: string;
+  tipo?: PortariaTipo;
+  /** Data inicial no formato YYYY-MM-DD */
+  desde?: string;
+  limite?: number;
+  offset?: number;
+}
+
+export interface ListPortariasResponse {
+  total: number;
+  limite?: number;
+  offset?: number;
+  itens: Portaria[];
+}
+
 // ── Status / Health ────────────────────────────────────────────────────────
 
 export interface HealthResponse {
