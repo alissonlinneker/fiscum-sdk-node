@@ -58,7 +58,109 @@ export interface ConsultarRegrasFiscaisParams {
   produto: RegrasFiscaisProduto[];
 }
 
+// Concrete response shape mirrors OpenAPI `RegrasFiscaisResponse` +
+// shared components (`Grupo`, `RegraIcms`, `FiscumMeta`) kept in sync with `openapi.yaml`.
+export interface PisCofinsRule {
+  cstPis?: string;
+  cstCofins?: string;
+  aliqPis?: number;
+  aliqCofins?: number;
+  baseCalculo?: number;
+  [key: string]: unknown;
+}
+
+export interface IpiRule {
+  cst?: string;
+  aliq?: number;
+  codEnq?: string;
+  [key: string]: unknown;
+}
+
+export interface CbsRule {
+  cst?: string;
+  aliq?: number;
+  [key: string]: unknown;
+}
+
+export interface IbsRule {
+  cst?: string;
+  aliq?: number;
+  [key: string]: unknown;
+}
+
+export interface RegraIcms {
+  codigo: number;
+  uf: string;
+  cst: string;
+  aliq?: number;
+  aliqInterna?: number;
+  aliqInterestadual?: number;
+  reducaoBC?: number;
+  mva?: number;
+  fcp?: number;
+  cestId?: string;
+  codBenef?: string;
+  [key: string]: unknown;
+}
+
+export interface Grupo {
+  codigo: number;
+  ncm: string;
+  descricaoNcm?: string;
+  cest?: string;
+  lista?: string;
+  tipo?: string;
+  codanp?: string;
+  piscofins?: PisCofinsRule;
+  ipi?: IpiRule;
+  cbs?: CbsRule;
+  ibs?: IbsRule;
+  regra: RegraIcms[];
+  produto: Array<{
+    codigo: string;
+    descricao: string;
+    ncm: string;
+    cest?: string;
+    curva?: string;
+    tipoCodigo?: number;
+    [key: string]: unknown;
+  }>;
+  [key: string]: unknown;
+}
+
+export interface BaixaSimilaridade {
+  codigoProduto: string;
+  descricaoFiscum?: string;
+  descricaoInformada?: string;
+  percentualSimilaridade: number;
+  [key: string]: unknown;
+}
+
+export interface FiscumMeta {
+  versao?: string;
+  totalGrupos?: number;
+  totalProdutos?: number;
+  totalBaixaSimilaridade?: number;
+  cacheHits?: number;
+  cacheMisses?: number;
+  versao_regra?: string;
+  [key: string]: unknown;
+}
+
 export interface RegrasFiscaisResponse {
+  cabecalho: {
+    cnpj: string;
+    cnae?: string;
+    crt: number;
+    uf_emitente: string;
+    finalidade?: number;
+    requestId?: string;
+    duracao?: string;
+    [key: string]: unknown;
+  };
+  grupo: Grupo[];
+  baixaSimilaridade: BaixaSimilaridade[];
+  fiscum: FiscumMeta;
   [key: string]: unknown;
 }
 
@@ -156,7 +258,24 @@ export interface CalcularDifalParams {
   [key: string]: unknown;
 }
 
+// Concrete DIFAL response mirrors OpenAPI `DifalResponse` (see openapi.yaml).
 export interface CalcularDifalResponse {
+  erro: boolean;
+  ncm: string;
+  uf_origem: string;
+  uf_destino: string;
+  valor: number;
+  importado: boolean;
+  contribuinte: 0 | 1;
+  fonte_aliquota: 'banco' | 'padrao';
+  aliq_interestadual: number;
+  aliq_interna: number;
+  fcp_percentual: number;
+  difal_valor: number;
+  difal_destino: number;
+  difal_origem: number;
+  fcp_valor: number;
+  total: number;
   [key: string]: unknown;
 }
 
@@ -168,7 +287,20 @@ export interface CalcularIcmsStParams {
   [key: string]: unknown;
 }
 
+// Concrete ICMS-ST response mirrors OpenAPI `IcmsStResponse` (see openapi.yaml).
 export interface CalcularIcmsStResponse {
+  ncm: string;
+  uf: string;
+  valor: number;
+  iva_percentual: number;
+  aliq_icms: number;
+  aliq_st: number;
+  fcp_percentual: number;
+  icms_proprio: number;
+  base_st: number;
+  icms_st: number;
+  fcp_st: number;
+  total_st: number;
   [key: string]: unknown;
 }
 
