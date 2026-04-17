@@ -166,9 +166,37 @@ export interface RegrasFiscaisResponse {
 
 // ── NCM ────────────────────────────────────────────────────────────────────
 
+/**
+ * Atributo oficial do Siscomex (CADA) vinculado a um NCM.
+ * Exposto em `NcmResponse.atributos.IMPORTACAO` / `EXPORTACAO`.
+ */
+export interface NcmAtributo {
+  codigo: string;
+  nome: string;
+  obrigatorio?: boolean;
+  formaPreenchimento?: string | null;
+  dominio?: unknown;
+  fundamentoLegal?: string | null;
+  [key: string]: unknown;
+}
+
+/**
+ * Atributos Siscomex CADA agrupados por modalidade.
+ * Pode vir com arrays vazios quando o seed ainda não cobre o NCM.
+ */
+export interface NcmAtributos {
+  IMPORTACAO: NcmAtributo[];
+  EXPORTACAO: NcmAtributo[];
+}
+
 export interface NcmResponse {
   ncm: string;
   descricao: string;
+  /**
+   * Atributos oficiais do Siscomex (CADA) agrupados por modalidade.
+   * Quando o seed ainda não cobre o NCM, vem como `{ IMPORTACAO: [], EXPORTACAO: [] }`.
+   */
+  atributos?: NcmAtributos;
   [key: string]: unknown;
 }
 
